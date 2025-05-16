@@ -7,6 +7,7 @@ export type CartItem = {
   name: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 };
 
 type CartState = {
@@ -31,7 +32,7 @@ export const useCartStore = create<CartState>()(
           if (existingItem) {
             return {
               items: state.items.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i,
               ),
             };
           }
@@ -56,7 +57,7 @@ export const useCartStore = create<CartState>()(
             .map((item) =>
               item.id === id
                 ? { ...item, quantity: Math.max(0, quantity) }
-                : item
+                : item,
             )
             .filter((item) => item.quantity > 0),
         }));
@@ -72,12 +73,12 @@ export const useCartStore = create<CartState>()(
       getTotal: () => {
         return get().items.reduce(
           (total, item) => total + item.price * item.quantity,
-          0
+          0,
         );
       },
     }),
     {
       name: "cart",
-    }
-  )
+    },
+  ),
 );

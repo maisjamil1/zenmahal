@@ -1,47 +1,46 @@
 import Image from "next/image";
-import {Trash} from "lucide-react";
+import { Trash } from "lucide-react";
 
 interface CartItemProps {
   id: number;
   name: string;
   price: number;
+  imageUrl: string;
   quantity: number;
   mainImageUrl: string;
   onQuantityChange: (id: number, newQuantity: number) => void;
   onRemove: (id: number) => void;
 }
 
-
 export default function CartItem({
   id,
   name,
   price,
   quantity,
-  mainImageUrl,
+  imageUrl,
   onQuantityChange,
   onRemove,
 }: CartItemProps) {
-    const getImageSrc = (imageData: any): string => {
-        if (!imageData) return "/product.png";
+  const getImageSrc = (imageData: any): string => {
+    if (!imageData) return "/product.png";
 
-        if (typeof imageData === "string") {
-            return imageData;
-        }
+    if (typeof imageData === "string") {
+      return imageData;
+    }
 
-        if (typeof imageData === "object" && imageData !== null) {
-            if (imageData.src) return imageData.src;
-        }
+    if (typeof imageData === "object" && imageData !== null) {
+      if (imageData.src) return imageData.src;
+    }
 
-        return "/product.png";
-    };
+    return "/product.png";
+  };
   return (
     <div key={id} className="border rounded-lg p-4 flex flex-col">
       <div className="flex gap-4">
         <div className="relative w-24 h-24">
-          <Image
-            src={getImageSrc(mainImageUrl)}
+          <img
+            src={imageUrl}
             alt={name}
-            fill
             sizes="100px"
             className="object-cover rounded-md"
           />
@@ -76,7 +75,7 @@ export default function CartItem({
           className="text-gray-500 hover:text-red-500"
           aria-label="Remove item"
         >
-            <Trash className="h-5 w-5"/>
+          <Trash className="h-5 w-5" />
         </button>
       </div>
       <div className="mt-2 text-right">

@@ -40,6 +40,7 @@ const Cart = () => {
                 key={item.id}
                 id={item.id}
                 name={item.name}
+                imageUrl={item.imageUrl}
                 price={item.price}
                 quantity={item.quantity}
                 mainImageUrl={item.mainImageUrl}

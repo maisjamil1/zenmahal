@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import AddToCartHandler from "@/components/features/ShoppingCart/components/AddToCartHandler";
+import FallbackDirectImage from "./FallbackDirectImage";
 
-interface ProductCardProps {
+interface SearchProductCardProps {
   id: string;
   slug: string;
   name: string;
@@ -14,35 +14,33 @@ interface ProductCardProps {
   description?: string;
 }
 
-export default function ProductCard({
+export default function SearchProductCard({
   id,
   slug,
   name,
   price,
-  mainImageUrl = "/product.png",
+  mainImageUrl = "/product-placeholder.png",
   hoverImageUrl,
   description,
-}: ProductCardProps) {
+}: SearchProductCardProps) {
   return (
     <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-      <Link href={`/${slug}`}>
+      <Link href={`/products/${id}`}>
         <div className="relative w-full h-80">
-          <Image
+          <FallbackDirectImage
             src={mainImageUrl}
+            fallbackSrc="/product-placeholder.png"
             alt={name}
-            fill
-            sizes="25vw"
-            className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease duration-500"
+            className="absolute object-cover rounded-md w-full h-full z-10 hover:opacity-0 transition-opacity ease duration-500"
           />
-          {/*{hoverImageUrl && (*/}
-          {/*  <Image*/}
-          {/*    src={hoverImageUrl}*/}
-          {/*    alt={name}*/}
-          {/*    fill*/}
-          {/*    sizes="25vw"*/}
-          {/*    className="absolute object-cover rounded-md"*/}
-          {/*  />*/}
-          {/*)}*/}
+          {hoverImageUrl && (
+            <FallbackDirectImage
+              src={hoverImageUrl}
+              fallbackSrc="/product-placeholder.png"
+              alt={name}
+              className="absolute object-cover rounded-md w-full h-full"
+            />
+          )}
         </div>
         <div className="flex justify-between mt-2">
           <span className="font-medium">{name}</span>

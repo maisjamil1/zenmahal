@@ -25,6 +25,7 @@ const AddToCartHandler = ({ TriggerBtn, data }: IProps) => {
         id,
         name,
         price,
+        imageUrl: mainImageUrl,
       });
     } catch (err) {
       toast.error("Failed to add item to cart");
@@ -32,7 +33,7 @@ const AddToCartHandler = ({ TriggerBtn, data }: IProps) => {
     }
   }, [id, addItem]);
 
-  return <>{TriggerBtn({ onClick: toggleItemInCart })};</>;
+  return <>{TriggerBtn({ onClick: toggleItemInCart })}</>;
 };
 
 export default AddToCartHandler;
