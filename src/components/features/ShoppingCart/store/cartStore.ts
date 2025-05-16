@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { toast } from "sonner";
 
 export type CartItem = {
   id: string;
@@ -23,14 +24,14 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (item) =>
+      addItem: (item) => {
         set((state) => {
           const existingItem = state.items.find((i) => i.id === item.id);
 
           if (existingItem) {
             return {
               items: state.items.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i,
+                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
               ),
             };
           }
@@ -39,22 +40,28 @@ export const useCartStore = create<CartState>()(
             items: [...state.items, { ...item, quantity: 1 }],
           };
         }),
+          toast.success("Item added to cart");
+      },
 
-      removeItem: (id) =>
+      removeItem: (id) => {
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
         })),
+          toast.success("Item removed from cart");
+      },
 
-      updateQuantity: (id, quantity) =>
+      updateQuantity: (id, quantity) => {
         set((state) => ({
           items: state.items
             .map((item) =>
               item.id === id
                 ? { ...item, quantity: Math.max(0, quantity) }
-                : item,
+                : item
             )
             .filter((item) => item.quantity > 0),
-        })),
+        }));
+        toast.success("Cart updated");
+      },
 
       clearCart: () => set({ items: [] }),
 
@@ -65,12 +72,12 @@ export const useCartStore = create<CartState>()(
       getTotal: () => {
         return get().items.reduce(
           (total, item) => total + item.price * item.quantity,
-          0,
+          0
         );
       },
     }),
     {
       name: "cart",
-    },
-  ),
+    }
+  )
 );
