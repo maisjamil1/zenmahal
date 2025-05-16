@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
 import { NAVIGATION_LINKS } from "@/components/layout/utils/constants";
+import CartCounter from "@/components/features/ShoppingCart/components/CartCounter";
 
 const Header = () => {
   return (
@@ -52,14 +53,7 @@ const Header = () => {
             ))}
           </nav>
           <div>
-            <div className="relative">
-              <ShoppingCart
-                className={"mr-2 cursor-pointer text-primary-gray-500 w-6 h-6"}
-              />
-              <span className="bg-blue-500 text-white rounded-full absolute top-[-6px] right-0 w-5 h-5 flex justify-center items-center text-[12px]">
-                1
-              </span>
-            </div>
+            <CartCounter/>
           </div>
         </div>
       </Container>

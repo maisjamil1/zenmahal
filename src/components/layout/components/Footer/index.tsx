@@ -19,7 +19,7 @@ const Footer = () => {
           </Link>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             {NAVIGATION_LINKS.map((route) => (
-              <li>
+              <li key={route.label}>
                 <Link
                   href={route.href}
                   className="hover:underline me-4 md:me-6"
