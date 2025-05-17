@@ -1,0 +1,22 @@
+{
+  "title": "Zenmahal",
+  "description": "Discover premium furniture, electronics, and clothing at Zenmahal.",
+  "keywords": [
+    "e-commerce",
+    "furniture",
+    "electronics",
+    "clothing",
+    "Zenmahal"
+  ],
+  "openGraph": {
+    "title": "Zenmahal",
+    "description": "Explore a wide range of products at Zen Mahal.",
+    "image": "https://zenmahal.vercel.app/og-image.jpg"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Zenmahal",
+    "description": "Shop the latest trends at Zenmahal.",
+    "image": "https://zenmahal.vercel.app/twitter-image.jpg"
+  }
+}

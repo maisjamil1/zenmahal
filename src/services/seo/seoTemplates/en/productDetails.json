@@ -1,0 +1,12 @@
+{
+  "titleTemplate": "{{name}} | Zen Mahal",
+  "descriptionTemplate": "{{description}}",
+  "imageTemplate": "{{image}}",
+  "openGraph": {
+    "type": "product",
+    "site_name": "Zen Mahal"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  }
+}
