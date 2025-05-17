@@ -50,7 +50,6 @@ const Cart = () => {
 
         <CartSummary
           totalPrice={calculateTotalPrice(cartItems)}
-          onCheckout={() => {}}
         />
       </div>
     </div>
