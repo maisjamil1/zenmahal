@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSearchStore } from "../store/searchStore";
 import ProductCardAdapter from "./ProductCardAdapter";
+import SearchProductCardSkeleton from "./SearchProductCardSkeleton";
 
 export default function SearchResults() {
   const { products, isLoading, searchProducts } = useSearchStore();
@@ -14,10 +15,19 @@ export default function SearchResults() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col justify-center items-center py-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-lama mb-4"></div>
-        <p className="text-gray-600">Loading products...</p>
-      </div>
+      <>
+        <div className="mb-6 flex justify-between items-center">
+          <div className="h-5 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+          <div className="h-5 bg-gray-200 rounded w-1/5 animate-pulse"></div>
+        </div>
+        
+        <div className="flex flex-wrap gap-6">
+          {/* Generate 8 skeleton cards */}
+          {Array.from({ length: 8 }).map((_, index) => (
+            <SearchProductCardSkeleton key={index} />
+          ))}
+        </div>
+      </>
     );
   }
 

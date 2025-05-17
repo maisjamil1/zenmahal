@@ -8,6 +8,9 @@ import {
   banner5,
   banner6,
 } from "@/components/features/HomePage/assets";
+import Offers from "@/components/features/HomePage/components/Offers";
+import Categories from "@/components/features/HomePage/components/Categories";
+import Container from "@/components/ui/Container";
 
 const BannersSlider = dynamic(
   () => import("@/components/shared/Gallery/Banners"),
@@ -37,19 +40,23 @@ const HomePage = () => {
   return (
     <>
       <Searchbar />
-      <div className="w-full mx-auto overflow-hidden h-[200px] sm:h-[250px] md:h-[400px] lg:h-[500px] xl:h-[550px]">
-        {!isMounted || isLoading ? (
-          <BannerSkeleton />
-        ) : (
-          <div className="w-full h-full">
-            <BannersSlider
-              images={bannerImages}
-              showNav={false}
-              showThumbnails={false}
-            />
-          </div>
-        )}
-      </div>
+      <Container>
+        <div className="w-full mx-auto overflow-hidden h-[200px] sm:h-[250px] md:h-[400px] lg:h-[500px] xl:h-[550px]">
+          {!isMounted || isLoading ? (
+            <BannerSkeleton />
+          ) : (
+            <div className="w-full h-full">
+              <BannersSlider
+                images={bannerImages}
+                showNav={false}
+                showThumbnails={false}
+              />
+            </div>
+          )}
+        </div>
+        <Offers />
+        <Categories />
+      </Container>
     </>
   );
 };
