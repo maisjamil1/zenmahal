@@ -6,8 +6,6 @@ import { useSearchStore } from "../store/searchStore";
 export default function SearchFilters() {
   const {
     categories,
-    minPrice,
-    maxPrice,
     searchParams,
     setSearchTerm,
     setCategory,
@@ -38,13 +36,14 @@ export default function SearchFilters() {
     });
   }, [searchParams]);
 
-  const debounce = (func: Function, delay: number) => {
+  // Type-safe debounce function that works with any function signature
+  function debounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
     let timeoutId: NodeJS.Timeout;
-    return (...args: any[]) => {
+    return (...args: Parameters<T>) => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => func(...args), delay);
     };
-  };
+  }
 
   const debouncedSearch = useCallback(
     debounce((term: string) => {

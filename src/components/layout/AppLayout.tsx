@@ -16,7 +16,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             className="min-h-screen p-4 pb-20"
         >
         {children}
-      < /main>
+      </main>
       <Footer />
       <Toaster />
     </>

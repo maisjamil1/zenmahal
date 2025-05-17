@@ -1,6 +1,6 @@
 import React from "react";
 
-interface BannerSkeletonProps {}
+type BannerSkeletonProps = Record<string, never>;
 
 const BannerSkeleton: React.FC<BannerSkeletonProps> = () => {
   return (

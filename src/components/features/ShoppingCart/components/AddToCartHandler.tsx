@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { toast } from "sonner";
 import useCartActions from "@/components/features/ShoppingCart/hooks/useCartActions";
 
@@ -16,22 +16,25 @@ interface IProps {
 }
 
 const AddToCartHandler = ({ TriggerBtn, data }: IProps) => {
-  const { id, slug, name, price, mainImageUrl, hoverImageUrl, description } =
-    data;
+  const { id, name, price, mainImageUrl } = data;
   const { addItem } = useCartActions();
   const toggleItemInCart = useCallback(() => {
     try {
-      addItem({
-        id,
-        name,
-        price,
-        imageUrl: mainImageUrl,
-      });
+      if (id && name && price && mainImageUrl) {
+        addItem({
+          id,
+          name,
+          price,
+          imageUrl: mainImageUrl,
+        });
+      } else {
+        toast.error("Missing product information");
+      }
     } catch (err) {
       toast.error("Failed to add item to cart");
       console.error("Error adding item to cart:", err);
     }
-  }, [id, addItem]);
+  }, [id, name, price, mainImageUrl, addItem]);
 
   return <>{TriggerBtn({ onClick: toggleItemInCart })}</>;
 };

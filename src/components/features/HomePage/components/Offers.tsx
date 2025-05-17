@@ -33,7 +33,7 @@ export default function Offers() {
     return () => clearInterval(interval);
   }, []);
 
-  const formatTime = (value) => value.toString().padStart(2, "0");
+  const formatTime = (value: number): string => value.toString().padStart(2, "0");
 
   const timeUnits = [
     { label: "hours", value: timeLeft.hours },

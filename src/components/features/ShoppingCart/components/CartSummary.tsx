@@ -7,7 +7,7 @@ interface CartSummaryProps {
 }
 
 export default function CartSummary({
-  getTotalPrice,
+  totalPrice,
   onCheckout,
   checkoutLabel = "Proceed to Checkout",
   returnLink = "/",
@@ -20,7 +20,7 @@ export default function CartSummary({
       <div className="border-t pt-4">
         <div className="flex justify-between mb-2">
           <span>Subtotal</span>
-          <span>${getTotalPrice.toFixed(2)}</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Discount</span>
@@ -28,7 +28,7 @@ export default function CartSummary({
         </div>
         <div className="flex justify-between font-bold text-lg mt-4 pt-4 border-t">
           <span>Total</span>
-          <span>${getTotalPrice.toFixed(2)}</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
       </div>
 

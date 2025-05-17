@@ -1,15 +1,15 @@
-import Image from "next/image";
 import { Trash } from "lucide-react";
+import Image from "next/image";
 
 interface CartItemProps {
-  id: number;
+  id: string | number;
   name: string;
   price: number;
   imageUrl: string;
   quantity: number;
   mainImageUrl: string;
-  onQuantityChange: (id: number, newQuantity: number) => void;
-  onRemove: (id: number) => void;
+  onQuantityChange: (id: string | number, newQuantity: number) => void;
+  onRemove: (id: string | number) => void;
 }
 
 export default function CartItem({
@@ -21,27 +21,16 @@ export default function CartItem({
   onQuantityChange,
   onRemove,
 }: CartItemProps) {
-  const getImageSrc = (imageData: any): string => {
-    if (!imageData) return "/product.png";
-
-    if (typeof imageData === "string") {
-      return imageData;
-    }
-
-    if (typeof imageData === "object" && imageData !== null) {
-      if (imageData.src) return imageData.src;
-    }
-
-    return "/product.png";
-  };
+  // Removed unused getImageSrc function
   return (
     <div key={id} className="border rounded-lg p-4 flex flex-col">
       <div className="flex gap-4">
         <div className="relative w-24 h-24">
-          <img
-            src={imageUrl}
+          <Image
+            src={imageUrl || "/product-placeholder.png"}
             alt={name}
-            sizes="100px"
+            width={100}
+            height={100}
             className="object-cover rounded-md"
           />
         </div>
@@ -53,7 +42,7 @@ export default function CartItem({
           <div className="flex items-center mt-2">
             <button
               onClick={() => onQuantityChange(id, quantity - 1)}
-              className="w-8 h-8 flex items-center justify-center border rounded-l-md"
+              className="cursor-pointer w-8 h-8 flex items-center justify-center border rounded-l-md"
               disabled={quantity <= 1}
             >
               -
@@ -63,7 +52,7 @@ export default function CartItem({
             </span>
             <button
               onClick={() => onQuantityChange(id, quantity + 1)}
-              className="w-8 h-8 flex items-center justify-center border rounded-r-md"
+              className="cursor-pointer w-8 h-8 flex items-center justify-center border rounded-r-md"
             >
               +
             </button>
@@ -72,7 +61,7 @@ export default function CartItem({
 
         <button
           onClick={() => onRemove(id)}
-          className="text-gray-500 hover:text-red-500"
+          className="cursor-pointer text-gray-500 hover:text-red-500"
           aria-label="Remove item"
         >
           <Trash className="h-5 w-5" />

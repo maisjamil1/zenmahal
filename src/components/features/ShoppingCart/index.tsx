@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import useCartData from "@/components/features/ShoppingCart/hooks/useCartData";
 import CartItem from "@/components/features/ShoppingCart/components/CartItem";
 import CartSummary from "@/components/features/ShoppingCart/components/CartSummary";
@@ -8,7 +9,16 @@ const Cart = () => {
   const { items: cartItems } = useCartData();
   const { removeItem, updateQuantity } = useCartActions();
 
-  const calculateTotalPrice = (items: any[]) => {
+  interface CartItemType {
+    id: string | number;
+    name: string;
+    price: number;
+    quantity: number;
+    imageUrl: string;
+    mainImageUrl?: string;
+  }
+
+  const calculateTotalPrice = (items: CartItemType[]) => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
@@ -18,12 +28,12 @@ const Cart = () => {
         <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
         <div className="text-center py-12">
           <p className="text-lg text-gray-600 mb-6">Your cart is empty</p>
-          <a
+          <Link
             href="/"
             className="bg-lama text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition"
           >
             Continue Shopping
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -52,7 +62,7 @@ const Cart = () => {
         </div>
 
         <CartSummary
-          getTotalPrice={calculateTotalPrice(cartItems)}
+          totalPrice={calculateTotalPrice(cartItems)}
           onCheckout={() => {}}
         />
       </div>

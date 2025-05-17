@@ -71,7 +71,7 @@ export default function ProductDetailsPage() {
             {error || "Product not found"}
           </h1>
           <p className="text-gray-600 mb-6">
-            We couldn't find the product you're looking for.
+            We couldn&apos;t find the product you&apos;re looking for.
           </p>
           <Link
             href="/search"

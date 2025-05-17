@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Category, Product, SearchParams } from "@/lib/api/types";
 import { productService } from "@/lib/api/productService";
-import { useRouter, useSearchParams } from "next/navigation";
+import { updateUrlWithSearchParams } from "@/lib/utils/searchParamsUtils";
 
 interface SearchState {
   // Search parameters

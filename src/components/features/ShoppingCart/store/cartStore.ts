@@ -40,18 +40,18 @@ export const useCartStore = create<CartState>()(
           return {
             items: [...state.items, { ...item, quantity: 1 }],
           };
-        }),
-          toast.success("Item added to cart");
+        });
+        toast.success("Item added to cart");
       },
 
-      removeItem: (id) => {
+      removeItem: (id: string | number) => {
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
-        })),
-          toast.success("Item removed from cart");
+        }));
+        toast.success("Item removed from cart");
       },
 
-      updateQuantity: (id, quantity) => {
+      updateQuantity: (id: string | number, quantity: number) => {
         set((state) => ({
           items: state.items
             .map((item) =>

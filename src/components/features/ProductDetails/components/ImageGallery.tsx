@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "@/styles/gallery.css";
@@ -16,18 +17,15 @@ export default function ProductImageGallery({
 }: ProductImageGalleryProps) {
   const [isMounted, setIsMounted] = useState(false);
 
-  // Use a default image if no images are provided
   const galleryImages =
     images.length > 0 ? images : ["/product-placeholder.png"];
 
-  // Format images for react-image-gallery
   const formattedImages: ReactImageGalleryItem[] = galleryImages.map(
     (image, index) => ({
       original: image,
       thumbnail: image,
       originalAlt: `${productName} - Image ${index + 1}`,
       thumbnailAlt: `${productName} - Thumbnail ${index + 1}`,
-      // Add fallback handling
       originalOnError: (e: React.SyntheticEvent<HTMLImageElement>) => {
         e.currentTarget.src = "/product-placeholder.png";
       },
@@ -37,12 +35,10 @@ export default function ProductImageGallery({
     })
   );
 
-  // Handle client-side rendering to prevent hydration issues
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Custom rendering for images to ensure consistent dimensions and fallback
   const renderItem = (item: ReactImageGalleryItem) => {
     return (
       <div
@@ -71,7 +67,6 @@ export default function ProductImageGallery({
     );
   };
 
-  // Custom rendering for thumbnails with fallback
   const renderThumbInner = (item: ReactImageGalleryItem) => {
     return (
       <img
@@ -85,7 +80,6 @@ export default function ProductImageGallery({
     );
   };
 
-  // Responsive gallery configuration
   const galleryProps = {
     items: formattedImages,
     showPlayButton: false,
