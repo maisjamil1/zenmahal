@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchStore } from "../store/searchStore";
-import { Button } from "@/components/ui/button";
 
 export default function SearchFilters() {
   const {
@@ -26,12 +25,10 @@ export default function SearchFilters() {
     max: searchParams.price_max || 10000,
   });
 
-  // Fetch categories on component mount
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
 
-  // Sync local state with search params when they change (e.g., from URL)
   useEffect(() => {
     setLocalSearchTerm(searchParams.title || "");
     setSelectedCategory(searchParams.categorySlug || "");
@@ -41,58 +38,68 @@ export default function SearchFilters() {
     });
   }, [searchParams]);
 
-  // Handle search term input
-  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearchTerm(e.target.value);
+  const debounce = (func: Function, delay: number) => {
+    let timeoutId: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
   };
 
-  // Handle search term submission
-  const handleSearchSubmit = () => {
-    setSearchTerm(searchTerm);
-    // Trigger search immediately when search term is submitted
-    setTimeout(() => {
+  const debouncedSearch = useCallback(
+    debounce((term: string) => {
+      setSearchTerm(term);
       useSearchStore.getState().searchProducts();
-    }, 0);
+    }, 500),
+    [setSearchTerm],
+  );
+
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTerm = e.target.value;
+    setLocalSearchTerm(newTerm);
+    debouncedSearch(newTerm);
   };
 
-  // Handle category selection
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categorySlug = e.target.value;
     setSelectedCategory(categorySlug);
     setCategory(categorySlug);
-    // Trigger search immediately when category changes
     setTimeout(() => {
       useSearchStore.getState().searchProducts();
     }, 0);
   };
 
-  // Handle price range changes
+  const debouncedPriceRange = useCallback(
+    debounce((min: number, max: number) => {
+      setPriceRange(min, max);
+      useSearchStore.getState().searchProducts();
+    }, 500),
+    [setPriceRange],
+  );
+
   const handlePriceMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const min = parseInt(e.target.value) || 0;
-    setLocalPriceRange((prev) => ({ ...prev, min }));
+    setLocalPriceRange((prev) => {
+      const newRange = { ...prev, min };
+      debouncedPriceRange(newRange.min, newRange.max);
+      return newRange;
+    });
   };
 
   const handlePriceMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const max = parseInt(e.target.value) || 10000;
-    setLocalPriceRange((prev) => ({ ...prev, max }));
+    setLocalPriceRange((prev) => {
+      const newRange = { ...prev, max };
+      debouncedPriceRange(newRange.min, newRange.max);
+      return newRange;
+    });
   };
 
-  // Apply price range filter
-  const handlePriceRangeApply = () => {
-    setPriceRange(priceRange.min, priceRange.max);
-    // Trigger search immediately when price range is applied
-    setTimeout(() => {
-      useSearchStore.getState().searchProducts();
-    }, 0);
-  };
-
-  // Handle reset filters
   const handleResetFilters = () => {
     setLocalSearchTerm("");
     setSelectedCategory("");
     setLocalPriceRange({ min: 0, max: 10000 });
     resetFilters();
-    // Trigger search immediately when filters are reset
     setTimeout(() => {
       useSearchStore.getState().searchProducts();
     }, 0);
@@ -102,7 +109,6 @@ export default function SearchFilters() {
     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
       <h2 className="text-xl font-semibold mb-4">Filters</h2>
 
-      {/* Search Term */}
       <div className="mb-4">
         <label
           htmlFor="search"
@@ -117,19 +123,11 @@ export default function SearchFilters() {
             value={searchTerm}
             onChange={handleSearchTermChange}
             placeholder="Search products..."
-            className="flex-grow rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-lama"
-            onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+            className="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-lama"
           />
-          <Button
-            onClick={handleSearchSubmit}
-            className="bg-blue-400 px-4 py-2 rounded-r-md hover:bg-opacity-90 transition-colors"
-          >
-            Search
-          </Button>
         </div>
       </div>
 
-      {/* Category Filter */}
       <div className="mb-4">
         <label
           htmlFor="category"
@@ -152,12 +150,11 @@ export default function SearchFilters() {
         </select>
       </div>
 
-      {/* Price Range */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Price Range
         </label>
-        <div className="flex items-center space-x-2 mb-2">
+        <div className="flex items-center space-x-2">
           <input
             type="number"
             value={priceRange.min}
@@ -176,15 +173,8 @@ export default function SearchFilters() {
             className="w-1/2 rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-lama"
           />
         </div>
-        <button
-          onClick={handlePriceRangeApply}
-          className="w-full bg-gray-100 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
-        >
-          Apply Price Range
-        </button>
       </div>
 
-      {/* Reset Filters */}
       <button
         onClick={handleResetFilters}
         className="w-full bg-red-100 text-red-700 px-4 py-2 rounded-md hover:bg-red-200 transition-colors"
