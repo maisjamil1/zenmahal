@@ -15,7 +15,7 @@ export default function MobileFilterToggle() {
     <div className="lg:hidden">
       <button
         onClick={toggleFilters}
-        className="flex items-center gap-2 bg-lama text-white px-4 py-2 rounded-md mb-4 w-full justify-center"
+        className="flex items-center gap-2 border border-purple-600 px-4 py-2 rounded-md mb-4 w-full justify-center transition-colors"
       >
         {isOpen ? (
           <>

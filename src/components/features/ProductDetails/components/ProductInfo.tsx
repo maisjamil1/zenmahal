@@ -43,8 +43,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           TriggerBtn={({ onClick }) => (
             <Button
               onClick={onClick}
-              className={"cursor-pointer"}
-              // className="w-full md:w-auto py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
+              className={"w-full md:w-auto py-3 px-6 rounded-md cursor-pointer transition-colors"}
+              // className="hover:bg-opacity-90 transition-colors"
             >
               Add to Cart
 
