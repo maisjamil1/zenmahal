@@ -1,15 +1,18 @@
 export const NAVIGATION_LINKS = [
   {
-    href: "/",
-    label: "Home",
-  },
-  {
     href: "/search",
-    label: "Search",
+    label: "All Categories",
   },
 
   {
-    href: "/categories",
-    label: "Categories",
+    href: "/search?categorySlug=furniture",
+    label: "Furniture",
+  },
+  {
+    href: "/search?categorySlug=electronics",
+    label: "Electronics",
+  },  {
+    href: "/search?categorySlug=clothes",
+    label: "Clothes",
   },
 ] as const;

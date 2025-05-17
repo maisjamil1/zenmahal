@@ -34,7 +34,7 @@ const Header = () => {
             </Sheet>
             <Link href="/" className="ml-4 lg:ml-0">
               <h1 className="text-2xl font-bold ">
-                <span className={"text-blue-500"}>Zen</span>
+                <span className={"text-purple-600"}>Zen</span>
                 <span className="text-2xl font-bold text-gray-800 ">mahal</span>
               </h1>
             </Link>

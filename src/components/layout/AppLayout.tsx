@@ -13,7 +13,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     <>
       <Header />
         <main
-            className="min-h-screen p-8 pb-20"
+            className="min-h-screen p-4 pb-20"
         >
         {children}
       < /main>

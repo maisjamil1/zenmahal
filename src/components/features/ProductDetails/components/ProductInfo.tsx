@@ -47,6 +47,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
               // className="w-full md:w-auto py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
             >
               Add to Cart
+
             </Button>
           )}
         />

@@ -13,7 +13,7 @@ const Footer = () => {
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
             <h1 className="text-2xl font-bold ">
-              <span className={"text-blue-500"}>Zen</span>
+              <span className={"text-purple-600"}>Zen</span>
               <span className="text-2xl font-bold text-gray-800 ">mahal</span>
             </h1>
           </Link>

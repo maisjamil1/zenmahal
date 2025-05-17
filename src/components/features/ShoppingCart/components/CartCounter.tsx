@@ -11,10 +11,10 @@ const CartCounter = () => {
   const onClickCart = () => router.push("/cart");
 
   return (
-    <div className="relative" onClick={onClickCart}>
+    <div className="relative cursor-pointer" onClick={onClickCart}>
       <ShoppingCart className="mr-2 cursor-pointer text-primary-gray-500 w-6 h-6" />
       {isReady && (
-        <span className="bg-blue-500 text-white rounded-full absolute top-[-6px] right-0 w-5 h-5 flex justify-center items-center text-[12px]">
+        <span className="bg-purple-600 text-white rounded-full absolute top-[-6px] right-0 w-5 h-5 flex justify-center items-center text-[12px]">
           {itemCount}
         </span>
       )}
