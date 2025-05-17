@@ -1,15 +1,11 @@
 interface CartSummaryProps {
   totalPrice: number;
-  onCheckout: () => void;
-  checkoutLabel?: string;
   returnLink?: string;
   returnText?: string;
 }
 
 export default function CartSummary({
   totalPrice,
-  onCheckout,
-  checkoutLabel = "Proceed to Checkout",
   returnLink = "/",
   returnText = "Continue Shopping",
 }: CartSummaryProps) {
@@ -31,13 +27,6 @@ export default function CartSummary({
           <span>${totalPrice.toFixed(2)}</span>
         </div>
       </div>
-
-      <button
-        onClick={onCheckout}
-        className="w-full bg-lama text-white py-3 rounded-md mt-6 hover:bg-opacity-90 transition"
-      >
-        {checkoutLabel}
-      </button>
 
       <a
         href={returnLink}

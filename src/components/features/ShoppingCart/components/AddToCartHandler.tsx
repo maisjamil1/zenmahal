@@ -32,7 +32,6 @@ const AddToCartHandler = ({ TriggerBtn, data }: IProps) => {
       }
     } catch (err) {
       toast.error("Failed to add item to cart");
-      console.error("Error adding item to cart:", err);
     }
   }, [id, name, price, mainImageUrl, addItem]);
 

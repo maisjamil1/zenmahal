@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
 import useCartData from "@/components/features/ShoppingCart/hooks/useCartData";
 import CartItem from "@/components/features/ShoppingCart/components/CartItem";
 import CartSummary from "@/components/features/ShoppingCart/components/CartSummary";
 import useCartActions from "@/components/features/ShoppingCart/hooks/useCartActions";
+import EmptyCart from "@/components/features/ShoppingCart/components/EmptyCart";
 
 const Cart = () => {
   const { items: cartItems } = useCartData();
@@ -23,20 +23,7 @@ const Cart = () => {
   };
 
   if (!cartItems || cartItems.length === 0) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
-        <div className="text-center py-12">
-          <p className="text-lg text-gray-600 mb-6">Your cart is empty</p>
-          <Link
-            href="/"
-            className="bg-lama text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition"
-          >
-            Continue Shopping
-          </Link>
-        </div>
-      </div>
-    );
+    return <EmptyCart />;
   }
 
   return (

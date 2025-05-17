@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import { getSearchUrl } from "@/components/features/HomePage/utils";
 
 export default function Searchbar() {
   const [searchText, setSearchText] = useState("");
@@ -10,9 +11,7 @@ export default function Searchbar() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchText.trim()) {
-      router.push(`/search?title=${encodeURIComponent(searchText.trim())}`);
-    }
+    if (searchText.trim()) router.push(getSearchUrl({ title: searchText }));
   };
 
   return (

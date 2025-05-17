@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Offers() {
   const [timeLeft, setTimeLeft] = useState({
-    hours: 200,
+    hours: 7,
     minutes: 51,
     seconds: 34,
   });
