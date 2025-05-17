@@ -28,18 +28,18 @@ export default function SearchPage() {
     <div className="container mx-auto px-4 py-8">
       {/* Initialize search params from URL */}
       <SearchParamsInitializer />
-      
+
       <h1 className="text-3xl font-bold mb-8">Search Products</h1>
-      
+
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Mobile filter toggle - only visible on small screens */}
         <MobileFilterToggle />
-        
+
         {/* Filters sidebar - hidden on small screens, visible on large screens */}
         <div className="hidden lg:block lg:w-1/4">
           <SearchFilters />
         </div>
-        
+
         {/* Search results */}
         <div className="w-full lg:w-3/4">
           {/* Active filters summary */}
@@ -56,23 +56,22 @@ export default function SearchPage() {
                   Category: {searchParams.categorySlug}
                 </div>
               )}
-              {(searchParams.price_min !== undefined && searchParams.price_min > 0) && (
-                <div className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center">
-                  Min Price: ${searchParams.price_min}
-                </div>
-              )}
-              {(searchParams.price_max !== undefined && searchParams.price_max < 10000) && (
-                <div className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center">
-                  Max Price: ${searchParams.price_max}
-                </div>
-              )}
+              {searchParams.price_min !== undefined &&
+                searchParams.price_min > 0 && (
+                  <div className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center">
+                    Min Price: ${searchParams.price_min}
+                  </div>
+                )}
+              {searchParams.price_max !== undefined &&
+                searchParams.price_max < 10000 && (
+                  <div className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center">
+                    Max Price: ${searchParams.price_max}
+                  </div>
+                )}
             </div>
           </div>
-          
-          {/* Results */}
+
           <SearchResults />
-          
-          {/* Pagination */}
           <PaginationHandler totalItems={totalItems} />
         </div>
       </div>

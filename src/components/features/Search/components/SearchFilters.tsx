@@ -16,7 +16,7 @@ export default function SearchFilters() {
 
   const [searchTerm, setLocalSearchTerm] = useState(searchParams.title || "");
   const [selectedCategory, setSelectedCategory] = useState(
-    searchParams.categorySlug || "",
+    searchParams.categorySlug || ""
   );
   const [priceRange, setLocalPriceRange] = useState({
     min: searchParams.price_min || 0,
@@ -37,7 +37,10 @@ export default function SearchFilters() {
   }, [searchParams]);
 
   // Type-safe debounce function that works with any function signature
-  function debounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
+  function debounce<T extends (...args: any[]) => void>(
+    func: T,
+    delay: number
+  ): (...args: Parameters<T>) => void {
     let timeoutId: NodeJS.Timeout;
     return (...args: Parameters<T>) => {
       clearTimeout(timeoutId);
@@ -50,7 +53,7 @@ export default function SearchFilters() {
       setSearchTerm(term);
       useSearchStore.getState().searchProducts();
     }, 500),
-    [setSearchTerm],
+    [setSearchTerm]
   );
 
   const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +76,7 @@ export default function SearchFilters() {
       setPriceRange(min, max);
       useSearchStore.getState().searchProducts();
     }, 500),
-    [setPriceRange],
+    [setPriceRange]
   );
 
   const handlePriceMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {

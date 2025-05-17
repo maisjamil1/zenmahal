@@ -36,7 +36,7 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     price_min: 0,
     price_max: 10000,
     limit: 10,
-    offset: 0
+    offset: 0,
   },
   products: [],
   categories: [],
@@ -50,44 +50,49 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
   setSearchTerm: (term: string) => {
     const newParams = {
       ...get().searchParams,
-      title: term
+      title: term,
     };
-    set(state => ({
-      searchParams: newParams
+    set((state) => ({
+      searchParams: newParams,
     }));
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
-  
+
   // Set search params from URL
   setSearchParamsFromUrl: (params: SearchParams) => {
-    const currentPage = params.offset !== undefined && params.limit !== undefined
-      ? Math.floor(params.offset / params.limit) + 1
-      : 1;
-      
+    const currentPage =
+      params.offset !== undefined && params.limit !== undefined
+        ? Math.floor(params.offset / params.limit) + 1
+        : 1;
+
     set({
       searchParams: params,
       currentPage,
       minPrice: params.price_min !== undefined ? params.price_min : 0,
       maxPrice: params.price_max !== undefined ? params.price_max : 10000,
-      itemsPerPage: params.limit || 10
+      itemsPerPage: params.limit || 10,
     });
   },
 
   setCategory: (categorySlug: string) => {
     const newParams = {
       ...get().searchParams,
-      categorySlug
+      categorySlug,
     };
-    set(state => ({
-      searchParams: newParams
+    set((state) => ({
+      searchParams: newParams,
     }));
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
@@ -96,16 +101,18 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     const newParams = {
       ...get().searchParams,
       price_min: min,
-      price_max: max
+      price_max: max,
     };
-    set(state => ({
+    set((state) => ({
       searchParams: newParams,
       minPrice: min,
-      maxPrice: max
+      maxPrice: max,
     }));
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
@@ -115,17 +122,19 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     const newOffset = (page - 1) * itemsPerPage;
     const newParams = {
       ...get().searchParams,
-      offset: newOffset
+      offset: newOffset,
     };
-    
-    set(state => ({
+
+    set((state) => ({
       currentPage: page,
-      searchParams: newParams
+      searchParams: newParams,
     }));
-    
+
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
@@ -136,17 +145,19 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     const newParams = {
       ...get().searchParams,
       limit: items,
-      offset: newOffset
+      offset: newOffset,
     };
-    
-    set(state => ({
+
+    set((state) => ({
       itemsPerPage: items,
-      searchParams: newParams
+      searchParams: newParams,
     }));
-    
+
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
@@ -158,19 +169,21 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
       price_min: 0,
       price_max: 10000,
       limit: get().itemsPerPage,
-      offset: 0
+      offset: 0,
     };
-    
+
     set({
       searchParams: newParams,
       currentPage: 1,
       minPrice: 0,
-      maxPrice: 10000
+      maxPrice: 10000,
     });
-    
+
     // Update URL
-    if (typeof window !== 'undefined') {
-      const { updateUrlWithSearchParams } = require('@/lib/utils/searchParamsUtils');
+    if (typeof window !== "undefined") {
+      const {
+        updateUrlWithSearchParams,
+      } = require("@/lib/utils/searchParamsUtils");
       updateUrlWithSearchParams(newParams);
     }
   },
@@ -180,15 +193,21 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     try {
       const { searchParams } = get();
       const products = await productService.searchProducts(searchParams);
-      
+
       // If we get no products and have filters applied, try a broader search
-      if (products.length === 0 && 
-          (searchParams.title || searchParams.categorySlug || 
-           searchParams.price_min !== 0 || searchParams.price_max !== 10000)) {
-        console.log('No products found with current filters, trying broader search...');
+      if (
+        products.length === 0 &&
+        (searchParams.title ||
+          searchParams.categorySlug ||
+          searchParams.price_min !== 0 ||
+          searchParams.price_max !== 10000)
+      ) {
+        console.log(
+          "No products found with current filters, trying broader search..."
+        );
         // Keep the search as is - the user might want to see that there are no results
       }
-      
+
       set({ products, isLoading: false });
     } catch (error) {
       console.error("Error searching products:", error);
@@ -203,5 +222,5 @@ export const useSearchStore = create<SearchState>()((set, get) => ({
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
-  }
+  },
 }));

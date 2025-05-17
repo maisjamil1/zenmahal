@@ -25,7 +25,7 @@ export default function SearchProductCard({
 }: SearchProductCardProps) {
   return (
     <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-      <Link href={`/products/${id}`}>
+      <Link href={`/products/${id}`} className={"block min-h-[450px]"}>
         <div className="relative w-full h-80">
           <FallbackDirectImage
             src={mainImageUrl}
@@ -44,12 +44,12 @@ export default function SearchProductCard({
         </div>
         <div className="flex justify-between mt-2">
           <span className="font-medium">{name}</span>
-          <span className="font-semibold">${price}</span>
         </div>
         {description && (
           <div className="text-sm text-gray-500">{description}</div>
         )}
       </Link>
+        <div className="block font-semibold text-sm">Price : ${price}</div>
 
       <AddToCartHandler
         data={{
@@ -59,12 +59,12 @@ export default function SearchProductCard({
           price,
           mainImageUrl,
           hoverImageUrl,
-          description
+          description,
         }}
         TriggerBtn={({ onClick }) => (
           <button
             onClick={onClick}
-            className="rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-lama hover:text-white transition-colors"
+            className="rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-purple-600 hover:text-white transition-colors"
           >
             Add to Cart
           </button>
